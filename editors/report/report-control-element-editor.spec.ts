@@ -46,7 +46,7 @@ describe('ReportControl element editor component', () => {
     editor.reportControlInputs![5].nullSwitch?.click();
     await editor.updateComplete;
 
-    editor.reportControlInputs![7].value = '43';
+    editor.reportControlInputs![6].value = '43';
 
     editor.rptEnabledInput.nullSwitch?.click();
     await editor.updateComplete;
@@ -65,12 +65,12 @@ describe('ReportControl element editor component', () => {
     expect(update.attributes).to.deep.equal({
       name: 'SomeNewName',
       desc: null,
-      confRev: '40001',
-      rptID: 'someOtherID',
-      buffered: 'false',
-      indexed: 'false',
-      bufTime: null,
+      buffered: '40001',
+      rptID: 'false',
+      indexed: 'someOtherID',
       intgPd: '43',
+      bufTime: null,
+      confRev: '10053',
     });
 
     expect(edits[1]).to.satisfy(isRemove);

@@ -75,8 +75,10 @@ describe('DataSet element editor', () => {
   it('allows to move FCDA child one step up', async () => {
     await setViewport({ width: 800, height: 1200 });
     await sendMouse({ type: 'click', position: [740, 600] }); // open menu
-    await timeout(200); // await menu to be opened
+    await timeout(300); // await menu to be opened
     await sendMouse({ type: 'click', position: [740, 700] }); // click on move up
+    await editor.updateComplete;
+    await timeout(200);
 
     const toBeMovedFCDA = dataSet.querySelectorAll(':scope > FCDA')[1];
     const reference = toBeMovedFCDA.previousElementSibling;
@@ -94,8 +96,10 @@ describe('DataSet element editor', () => {
   it('allows to move FCDA child one step down', async () => {
     await setViewport({ width: 800, height: 1200 });
     await sendMouse({ type: 'click', position: [740, 600] }); // open menu
-    await timeout(200); // await menu to be opened
+    await timeout(300); // await menu to be opened
     await sendMouse({ type: 'click', position: [740, 780] }); // click on move down
+    await editor.updateComplete;
+    await timeout(200);
 
     const toBeMovedFCDA = dataSet.querySelectorAll(':scope > FCDA')[1];
     const reference = toBeMovedFCDA.nextElementSibling?.nextElementSibling;

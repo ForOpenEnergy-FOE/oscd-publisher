@@ -34,7 +34,7 @@ import type {
 // eslint-disable-next-line import/no-duplicates
 import { SclTextField } from '@openenergytools/scl-text-field';
 
-import { addFCDAs, addFCDOs } from './foundation.js';
+import { addFCDAs, addFCDOs, getFcdaInstDesc } from './foundation.js';
 import { dataAttributeTree } from './dataAttributePicker.js';
 import { dataObjectTree } from './dataObjectPicker.js';
 
@@ -255,9 +255,15 @@ export class DataSetElementEditor extends LitElement {
           },
         });
 
+      const description = Object.values(getFcdaInstDesc(fcda))
+        .flat(Infinity as 1)
+        .join(' > ');
+
       return {
-        headline: `${doName}${daName ? `.${daName} [${fc}]` : ` [${fc}]`}`,
-        supportingText: `${ldInst}/${prefix}${lnClass}${lnInst}`,
+        headline: `${ldInst}/${prefix}${lnClass}${lnInst}.${doName}${
+          daName ? `.${daName} [${fc}]` : ` [${fc}]`
+        }`,
+        supportingText: description,
         actions,
       };
     });
@@ -265,6 +271,7 @@ export class DataSetElementEditor extends LitElement {
     return html`<action-list
       class="list fcda"
       .items=${items}
+      height="84"
       filterable
       searchhelper="Filter Data"
     ></action-list>`;
@@ -358,7 +365,7 @@ export class DataSetElementEditor extends LitElement {
         id="${identity(this.element)}"
         label="desc"
         .value=${this.desc}
-        supportingText="DateSet Description"
+        supportingText="DataSet Description"
         nullable
         @input=${() => this.onInputChange()}
       >
@@ -442,6 +449,7 @@ export class DataSetElementEditor extends LitElement {
 
     action-list {
       z-index: 0;
+      justify-content: space-between;
     }
 
     *[iconTrailing='search'] {
